@@ -38,7 +38,7 @@ class ConversionsViewModel
     fun updateRecycled(base: String) {
         mBase = base
         disposable = Observable.interval(
-            1000, 10000, TimeUnit.MILLISECONDS)
+            0, 1, TimeUnit.SECONDS)
             .observeOn(observeOnScheduler)
             .subscribe(this::getConversions, this::onError)
     }
