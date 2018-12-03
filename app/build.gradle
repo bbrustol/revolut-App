@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.brustoloni.revoluttestapp"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "ROUTER_URL", "\"https://revolut.duckdns.org/\"")
+        buildConfigField("String", "LATEST", "\"latest?\"")
+        buildConfigField("String", "BASE", "\"base=\"")
+        buildConfigField("String", "CURRENCY_DEFAULT", "\"EUR\"")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.android.support:appcompat-v7:$appcompactVersion"
+    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.constraintLayoutVersion}"
+
+    //dagger
+    implementation "com.google.dagger:dagger-android:${rootProject.ext.daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${rootProject.ext.daggerSupportVersion}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
+    kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.daggerVersion}"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okttp3Version}"
+
+    // rx
+    implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidVersion}"
+    implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
+    implementation "com.jakewharton.rxbinding2:rxbinding:${rootProject.ext.rxBindingVersion}"
+
+    // recycler
+    implementation "com.android.support:cardview-v7:${rootProject.ext.supportVersion}"
+    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
+    implementation "com.android.support:design:${rootProject.ext.supportVersion}"
+
+    // architecture
+    implementation "android.arch.lifecycle:runtime:${rootProject.ext.lifecycleVersion}"
+    implementation "android.arch.lifecycle:common-java8:${rootProject.ext.lifecycleVersion}"
+    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycleVersion}"
+    implementation "android.arch.lifecycle:reactivestreams:${rootProject.ext.lifecycleVersion}"
+    annotationProcessor "android.arch.lifecycle:compiler:${rootProject.ext.lifecycleVersion}"
+
+    //anko
+    implementation 'org.jetbrains.anko:anko-commons:0.10.3'
+
+    //tests
+    testImplementation "junit:junit:${rootProject.ext.junitVersion}"
+    androidTestImplementation "com.android.support.test:runner:${rootProject.ext.testRunnerVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoVersion}"
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/rate_item_image_flag"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@mipmap/ic_launcher"
+    />
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight=".4">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rate_item_tv_currency_locale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Lorem ipsum dolor it"
+        />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rate_item_tv_currency_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:textColor="@color/colorPrimary"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="Lorem ipsum dolor it ame dsdsdsfsdfsdfsddsfdsfsdfsdfsdf"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/rate_item_ed_currency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".6"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="textEnd"
+        android:maxLines="1"
+        android:maxLength="18"
+        android:ellipsize="end"
+        tools:text="1.000.000.000,00"/>
+
+    <View
+        android:id="@+id/rate_item_button"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="visible"/>
+</LinearLayout>
