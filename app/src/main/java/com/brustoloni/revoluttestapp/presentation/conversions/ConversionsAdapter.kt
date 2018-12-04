@@ -1,18 +1,16 @@
 package com.brustoloni.revoluttestapp.presentation.conversions
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import br.com.itau.cartoes.infrastructure.CurrencyTextWatcher
 import kotlinx.android.synthetic.main.rate_item.view.*
 import com.brustoloni.revoluttestapp.data.model.CurrencysModel
 import com.brustoloni.revoluttestapp.R
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.math.BigDecimal
-
+import android.support.v7.widget.SimpleItemAnimator
 
 class ConversionsAdapter : RecyclerView.Adapter<ViewHolder>() {
 
@@ -40,60 +38,55 @@ class ConversionsAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Log.d("aaaa", "mFactor-> " + mFactor.toString())
         val currency = mCurrenciesLast.get(position)
 
-        var mCurrencyTextWatcher = CurrencyTextWatcher(holder.itemView.rate_item_ed_currency, object :
-            CurrencyTextWatcher.CurrencyTextWatcherListener {
-            override fun onValueChanged(value: Double) {
-                if (holder.adapterPosition == 0) {
-                    mFactor = value.toBigDecimal()
-                    Log.d("aaaa", mFactor.toString())
-                }
-            }
-        })
-
         holder.itemView.apply {
-            //            rate_item_image_flag
-//            rate_item_tv_currency_name
-
             if (position == 0) {
                 rate_item_button.visibility = View.GONE
-            } else {
-                rate_item_button.visibility = View.GONE
+            }else {
+                rate_item_button.visibility = View.VISIBLE
             }
-
-            rate_item_button.alpha = 0f
             rate_item_tv_currency_locale.text = currency.code
             rate_item_ed_currency.setText(calcNewValue(currency.value))
-            rate_item_ed_currency.addTextChangedListener(mCurrencyTextWatcher)
             rate_item_ed_currency.setOnKeyListener { view, i, keyEvent ->
+                mFactor = currencyToDecimal(rate_item_ed_currency?.text.toString())
+                notifyItemRangeChanged(1, mCurrenciesLast.size)
+
                 rate_item_ed_currency.setSelection(
                     rate_item_ed_currency.text!!.length,
                     rate_item_ed_currency.text!!.length
                 )
 
-                notifyItemRangeChanged(1,mCurrenciesLast.size)
-
                 false
             }
 
-            setOnClickListener {
-                var newCurrenyPos = mCurrenciesLast.get(holder.adapterPosition)
+            rate_item_button.setOnClickListener {
+                val newCurrenyPos = mCurrenciesLast.get(holder.adapterPosition)
                 mFactor = mCurrenciesLast.get(holder.adapterPosition).value.toBigDecimal()
 
                 clickSubject.onNext(mCurrenciesLast.get(holder.adapterPosition).code)
 
-                mFactor = mCurrencyTextWatcher.currencyToDecimal(it.rate_item_ed_currency.text.toString())
+                mFactor = currencyToDecimal(mRecyclerView.findViewHolderForAdapterPosition(holder.adapterPosition)?.itemView?.rate_item_ed_currency?.text.toString())
 
-                it.rate_item_ed_currency.requestFocus()
+                mRecyclerView.findViewHolderForAdapterPosition(holder.adapterPosition)
+                    ?.itemView?.rate_item_ed_currency?.rate_item_ed_currency?.requestFocus()
 
                 mCurrenciesLast.removeAt(holder.adapterPosition)
                 mCurrenciesLast.add(0, newCurrenyPos)
                 newValues(0, holder.adapterPosition)
             }
+
         }
     }
+
+    fun currencyToDecimal(currencyValue: String): BigDecimal {
+
+        var value = currencyValue.replace("[(a-z)|(A-Z)|($,. )]".toRegex(), "")
+        val len = value.length
+        value = value.substring(0,len-2) +"."+ value.substring(len-2,len)
+        return value.toBigDecimal()
+    }
+
 
     private fun calcNewValue(value: Float): String {
         return "%.2f".format(value.toBigDecimal() * mFactor)
@@ -115,14 +108,19 @@ class ConversionsAdapter : RecyclerView.Adapter<ViewHolder>() {
                 }
             }
         }
-        mFlagFirst = false
+        (mRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         notifyItemRangeChanged(1,mCurrenciesLast.size)
+
+        mFlagFirst = false
     }
 
 
     fun newValues(to:Int, from:Int) {
+        (mRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = true
         notifyItemMoved(from, to)
         mRecyclerView.scrollToPosition(0)
+        mRecyclerView.findViewHolderForAdapterPosition(from)?.itemView?.rate_item_button?.visibility = View.VISIBLE
+        mRecyclerView.findViewHolderForAdapterPosition(0)?.itemView?.rate_item_button?.visibility = View.GONE
     }
 }
 

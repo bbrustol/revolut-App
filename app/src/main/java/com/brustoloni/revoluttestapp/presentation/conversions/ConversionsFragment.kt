@@ -7,7 +7,6 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +44,6 @@ class ConversionsFragment : Fragment() {
         state?.let {
             when (state) {
                 is DefaultState -> {
-//                    viewModel.updateBase()
                     conversionsAdapter.updateData(viewModel.getCoonvertToArrayList(), it.conversions.base)
                 }
                 is ErrorState -> {

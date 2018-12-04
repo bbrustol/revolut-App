@@ -8,7 +8,7 @@ interface ConversionsUseCases {
     fun getConversions(base: String) : Single<ConversionsModel>
 }
 
-val emptyConversionsModel = ConversionsModel("","", LinkedHashMap<String, Float>())
+val emptyConversionsModel = ConversionsModel("","", LinkedHashMap())
 
 @Parcelize
 data class ConversionsModel(val base: String,

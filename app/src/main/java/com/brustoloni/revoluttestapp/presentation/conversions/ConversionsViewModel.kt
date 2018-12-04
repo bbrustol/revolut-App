@@ -3,7 +3,6 @@ package com.brustoloni.revoluttestapp.presentation.conversions
 import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.brustoloni.revoluttestapp.BuildConfig
 import com.brustoloni.revoluttestapp.data.model.ConversionsModel
 import com.brustoloni.revoluttestapp.data.model.ConversionsUseCases
 import com.brustoloni.revoluttestapp.data.model.CurrencysModel

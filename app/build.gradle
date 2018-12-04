@@ -62,7 +62,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaVersion}"
     implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidVersion}"
     implementation "io.reactivex.rxjava2:rxkotlin:${rootProject.ext.rxKotlinVersion}"
-    implementation "com.jakewharton.rxbinding2:rxbinding:${rootProject.ext.rxBindingVersion}"
 
     // recycler
     implementation "com.android.support:cardview-v7:${rootProject.ext.supportVersion}"

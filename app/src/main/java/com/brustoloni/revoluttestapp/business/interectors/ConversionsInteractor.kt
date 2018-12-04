@@ -1,6 +1,5 @@
 package com.brustoloni.revoluttestapp.business.interectors
 
-
 import com.brustoloni.revoluttestapp.data.model.ConversionsModel
 import com.brustoloni.revoluttestapp.data.model.ConversionsUseCases
 import com.brustoloni.revoluttestapp.data.repository.ConversionsRepository
